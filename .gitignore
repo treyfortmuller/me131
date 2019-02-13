@@ -1,2 +1,5 @@
 # ignore the barc github repo
 barc/
+
+# ignore videos in deliverables
+*.mp4
