@@ -1,3 +1,6 @@
+# ignore class files
+class_files/
+
 # ignore the barc github repo
 barc/
 
