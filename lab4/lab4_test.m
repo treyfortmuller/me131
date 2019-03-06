@@ -12,11 +12,11 @@ endT = PWM_timeseries.TimeInfo.end;
 timeLength = endT - startT;
 timeStep = [1:398];
 
-% figure()
-% plot(PWM_timeseries) % the time series with unix time
+figure()
+plot(PWM_timeseries) % the time series with unix time
 
-% figure()
-% plot(timeStep, PWM_timeseries.Data) % the time series with time steps
+figure()
+plot(timeStep, PWM_timeseries.Data) % the time series with time steps
 
 encoder_FL = sig{12};
 encoder_FR = sig{13};

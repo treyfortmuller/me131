@@ -31,6 +31,10 @@ load('ID_rosbags/matFiles/speedID_7.mat');
 PWM_ts7 = sig{10}; % motor PWM time series
 encoder_FL7 = sig{12};
 
+% plot the PWM vs time for a deliverable plot
+% figure()
+% plot(PWM_ts1)
+
 % extract the data from the time series object
 enc1_data = encoder_FL1.Data;
 enc2_data = encoder_FL2.Data;
@@ -274,3 +278,14 @@ w = v\vdot % perform least squares to obtain coefficients for a TF
 % result of the linear regression:
 % a = -0.0943
 % b = 0.0001
+
+%% Compare Transfer Function prediction with 5 Recorded Values
+
+% plot longitudinal velocity against the index for debug
+figure()
+legend()
+hold on
+plot(long_vel1)
+plot(long_vel4)
+plot(long_vel5)
+plot(long_vel7)
