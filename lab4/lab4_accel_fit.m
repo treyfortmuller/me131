@@ -1,6 +1,8 @@
 % performs the least squares regression on test data to determine a
 % transfer function for commanded PWM -> velocity
 
+clc; close all; clear
+
 %% Load Data
 % bring in the matlab data timeseries for a working encoder and the PWM
 load('ID_rosbags/matFiles/speedID_1.mat');
@@ -232,30 +234,36 @@ rec_pwm4 = resampled_PWM4.Data;
 rec_pwm5 = resampled_PWM5.Data;
 rec_pwm7 = resampled_PWM7.Data;
 
+% rec_pwm1 = rec_pwm1-1500;
+% rec_pwm4 = rec_pwm4-1500;
+% rec_pwm5 = rec_pwm5-1500;
+% rec_pwm7 = rec_pwm7-1500;
+
+
 % rectify the data by excluding any NaNs
 % trial 1 data
 nan_indicies = find(isnan(rec_pwm1));
 rec_pwm1 = rec_pwm1(1:nan_indicies(1) - 1); % remove all the NaNs
 s_ang_accel1 = s_ang_accel1(1:length(rec_pwm1));
-rec_long_vel1 = rec_long_vel1(1:length(rec_pwm1));
+rec_long_vel1 = long_vel1(1:length(rec_pwm1));
 
 % trial 4 data
 nan_indicies = find(isnan(rec_pwm4));
 rec_pwm4 = rec_pwm4(1:nan_indicies(1) - 1); % remove all the NaNs
 s_ang_accel4 = s_ang_accel4(1:length(rec_pwm4));
-rec_long_vel4 = rec_long_vel4(1:length(rec_pwm4));
+rec_long_vel4 = long_vel4(1:length(rec_pwm4));
 
 % trial 5 data
 nan_indicies = find(isnan(rec_pwm5));
 rec_pwm5 = rec_pwm5(1:nan_indicies(1) - 1); % remove all the NaNs
 s_ang_accel5 = s_ang_accel5(1:length(rec_pwm5));
-rec_long_vel5 = rec_long_vel5(1:length(rec_pwm5));
+rec_long_vel5 = long_vel5(1:length(rec_pwm5));
 
 % trial 7 data
 nan_indicies = find(isnan(rec_pwm7));
 rec_pwm7 = rec_pwm7(1:nan_indicies(1) - 1); % remove all the NaNs
 s_ang_accel7 = s_ang_accel7(1:length(rec_pwm7));
-rec_long_vel7 = rec_long_vel7(1:length(rec_pwm7));
+rec_long_vel7 = long_vel7(1:length(rec_pwm7));
 
 %% Construct the Matrices for Linear Regression
 % construct the vdot matrix by vertically concatinating the smoothed
@@ -282,10 +290,10 @@ w = v\vdot % perform least squares to obtain coefficients for a TF
 %% Compare Transfer Function prediction with 5 Recorded Values
 
 % plot longitudinal velocity against the index for debug
-figure()
-legend()
-hold on
-plot(long_vel1)
-plot(long_vel4)
-plot(long_vel5)
-plot(long_vel7)
+% figure()
+% legend()
+% hold on
+% plot(long_vel1)
+% plot(long_vel4)
+% plot(long_vel5)
+% plot(long_vel7)
