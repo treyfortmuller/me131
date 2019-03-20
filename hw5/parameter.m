@@ -14,4 +14,10 @@ be = 0.008;
 R_w_Idle = 9;
 v0 = 0.001; %m/s
 w0 = v0/r_e/R;
-sigma_max = % Fill with answer from 1.1
+
+load('tireForceModel.mat');
+% plot(arrSigma, arrFl);
+
+[argvalue, argmax] = max(arrFl);
+
+sigma_max = arrSigma(argmax) % 0.041 i.e. 4.1% slip is maximum tire force
