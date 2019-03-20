@@ -6,3 +6,6 @@ barc/
 
 # ignore videos in deliverables
 *.mp4
+
+# ignore submitted zip files
+*.zip
