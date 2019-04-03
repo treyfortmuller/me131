@@ -11,8 +11,8 @@ Cd = 12.5;
 p = 1.225;
 g = 9.81;
 m = 5;
-A = -Af*Cd*p*0.5;
-B = 1;
+A = -Af*Cd*p*0.5/m;
+B = 1/m;
 %% 1.5
 K = lqr(A,B,100,1)
 %% 1.6 simulink model
