@@ -54,5 +54,3 @@ plot(steps.Time, steps.Data);
 
 
 
-
-
