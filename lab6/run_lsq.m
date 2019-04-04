@@ -1,4 +1,4 @@
-function beta_hat = run_lsq(time_nsecs,velocity)
+function [beta_hat, Cd, Rx] = run_lsq(time_nsecs,velocity)
 % returns from beta_hat from a nonlinear least squares on recorded coast
 % down data
 
@@ -32,5 +32,11 @@ fun = @(beta, xdata) (1/beta)*tan((1 - xdata)*atan(beta));
 
 % the least squares solution to the beta parameter
 beta_hat = lsqcurvefit(fun, beta, xdata, ydata);
+Cd = (2*m*beta_hat*atan(beta_hat))/(V0*rho*T*Af);
+Rx = (V0*m*atan(beta_hat))/(beta_hat*T);
+
+% the plot for task 2.3 deliverable
+plot(normalized_t, normalized_v)
+
 end
 
