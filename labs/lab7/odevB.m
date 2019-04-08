@@ -18,8 +18,12 @@ g = 9.81;
 % v is a 3x1 vector [vx;vy;vz]
 % function skew_sym(vector) will come in handy. 
 
+accel = [ax; ay; az - g];
+angular_vel = [wx; wy; wz];
+angular_skew_sym = skew_sym(angular_vel);
+
 %% ****** Deliverable *****
 %% Complete the ODEs for linear velocities in the body frame.
-dvB = ...;
+dvB = accel - angular_skew_sym*v;
 
 end

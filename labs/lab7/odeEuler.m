@@ -8,8 +8,20 @@ wz = interp1(tSpan,wz,t);
 
 %% ****** Deliverable *****
 %% Complete the following term for the inverse Wronskian matrix 
-Winv =  ...;
+% psi = yaw
+% theta = pitch
+% phi = roll
 
+yaw = E(1);
+pitch = E(2);
+roll = E(3);
+
+Winv =  (1/cos(pitch))*[0, sin(roll), cos(roll);
+                        0, cos(roll)*cos(pitch), -sin(roll)*cos(pitch);
+                        cos(pitch), sin(roll)*sin(pitch), cos(roll)*sin(pitch)];
+
+angular_vel = [wx; wy; wz];
+                    
 %dEuler is a 3x1 vector containing the derivatives of yaw,pitch,roll 
-dEuler = ...;
+dEuler = Winv*angular_vel;
 end

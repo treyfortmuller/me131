@@ -11,6 +11,9 @@ vz = interp1(tSpan,vz,t);
 %% ****** Deliverable *****
 %% Complete the ODE for x-y-z coordinates in the inertial frame
 %dIB is a 3x1 vector containing the derivatives of X, Y, Z 
-dIB = ...;
+
+velocity = [vx; vy; vz];
+
+dIB = Q_BtoI(yaw, pitch, roll)*velocity;
     
 end

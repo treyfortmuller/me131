@@ -27,7 +27,7 @@ Rroll = @(roll) [1, 0,         0;
                  0, sin(roll), cos(roll)];
 
 % Hint use Ryaw,Rpitch,Rroll to find Q rather than writing the entire matrix 
-Q_BtoI = @(yaw,pitch,roll) Ryaw(yaw)*Rpitch(pitch)*Rroll(roll);
+Q_BtoI = @(yaw,pitch,roll) Rroll(roll)*Rpitch(pitch)*Ryaw(yaw);
 Q_Ito_B = @(yaw,pitch,roll) inv(Q_BtoI(yaw, pitch, roll));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -71,7 +71,7 @@ vz_I_data=vz_I_signal.Data;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Convert vehicle spped from inertial frame to body frame
 for k=1:length(vx_I_data)
-    Q1c = Q_BtoII(yaw_data(k),pitch_data(k),roll_data(k));
+    Q1c = Q_BtoI(yaw_data(k),pitch_data(k),roll_data(k));
     %Q1c=[cos(yaw_data(k)), -sin(yaw_data(k)),0;sin(yaw_data(k)), cos(yaw_data(k)),0;0,0,1]; % change of frame
     out=Q1c'*[vx_I_data(k);vy_I_data(k);vz_I_data(k)];
     vx_B_data(k,1)=out(1);
@@ -154,7 +154,7 @@ h=.2;
 figure
 hold on
 b_exp = [IB(1,1),IB(1,2),IB(1,3)];
-rot_exp = Q_BtoII(E(1,1),E(1,2),E(1,3)) ;
+rot_exp = Q_BtoI(E(1,1),E(1,2),E(1,3)) ;
 
 x1=0;
 x2=20;
@@ -180,12 +180,12 @@ for i = 1:nframe:numel(tSpan)
     hold on
     % Draw the BARC based on real data
     b_exp = [Xresampled.Data(i);Yresampled.Data(i);Zresampled.Data(i)];
-    rot_exp = Q_BtoII(yaw_data(i),pitch_data(i),roll_data(i));
+    rot_exp = Q_BtoI(yaw_data(i),pitch_data(i),roll_data(i));
     drawBox(l,w,h,b_exp,rot_exp,'r');
     
     % Draw the BARC based on simulation results
     b_sim = [IB(i,1);IB(i,2);IB(i,3)];
-    rot_sim = Q_BtoII(E(i,1),E(i,2),E(i,3));
+    rot_sim = Q_BtoI(E(i,1),E(i,2),E(i,3));
     drawBox(l,w,h,b_sim,rot_sim,'g');
     
     xlim([x1 x2]);
