@@ -1,0 +1,38 @@
+
+videoDevicePath: "/dev/video6"
+width:          640
+height:         480
+brightness:     0
+contrast:       50
+saturation:     255
+hue:            130
+flipped_camera: False
+
+mtx:  [[592.156892, 0.000000, 326.689246], [0.000000, 584.923917, 282.822026], [0.000000, 0.000000, 1.000000]]
+dist: [-0.585868, 0.248490, -0.023236, -0.002907, 0.000000]
+
+reference_velocity: 0.3
+numMovingAveragePoints: 5
+furthest_distance: 0.45
+camera_offset_distance: 0.40
+
+loop_rate:                   30
+colorFilter:                 True 
+overlayPointsOnColoredImage: True
+kernel_size:                 11
+
+lower_red: [90,0,0]
+upper_red: [255,140,50]
+
+lower_white: [255,255,255]
+upper_white: [255,255,255]
+
+boxsize: 10
+numStepsToLookAhead: 7
+converge_limit: 100
+
+bMatrix:                    [2.1429e+03,-4.6327e+03,3.2614e+03,-740.6041]
+f1Matrix:                   [-60.4515,-47.6005,35.6515,-0.5141]
+f2Matrix:                   [-7.8095e+03,1.9004e+04,-1.6294e+04,5.4940e+03]
+xInertial_to_yPixel_Matrix: [750,-2.025e+03,1.96e+03,-524.6]
+yPixel_to_xInertial_Matrix: [2.2360e-07,-3.722e-05,0.0043,0.3644]

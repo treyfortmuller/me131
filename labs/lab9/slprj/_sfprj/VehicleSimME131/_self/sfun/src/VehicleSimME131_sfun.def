@@ -1,0 +1,4 @@
+LIBRARY VehicleSimME131_sfun.mexw64
+EXPORTS
+mexFunction
+mexfilerequiredapiversion
