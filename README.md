@@ -23,6 +23,14 @@ Repository for homework and lab assignments for Berkeley's ME131 class.
 
 4. Lastly, you enter the remote into nautilus like `ssh://odroid@10.0.0.1` (you can also use ``sftp`, it will automatically change `ssh` into `sftp` in nautilus) to view its file system in nautilus and copy and files by drag and drop.
 
+#### Connecting via VNC Viewer
+
+* Make sure that you are connected to your car’s wifi.
+
+* In the VNC server prompt, enter your Odroid’s IP address: 10.0.0.1 and click Ok. You should now
+  see the BARC’s Odroid screen on your laptop, and be able to control it using your regular mouse
+  and keypad.
+
 #### Running ROS code on the Odroid
 
 1. To start up a data service to record all experiments to rosbags use:

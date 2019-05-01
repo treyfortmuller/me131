@@ -23,8 +23,11 @@ for i = 1:size(xPixel_yPixel_lateral,2)
     xPixel_yPixel_centerline(i,:) = xPixel_yPixel_lateral{i}(round(size(xPixel_yPixel_lateral{i},1)/2),:);
 end
 xPixel_yPixel_centerline = convertPixelFrame_Topleft_to_BottomCenter(xPixel_yPixel_centerline);
-centerline_max = 0.96;
-centerline_min = 0.56;
+
+% TODO: CHANGE THESE
+centerline_max = 0.7525; % the farthest center dot distance in meters in the in the inertial frame
+centerline_min = 0.3524; % the closest center dot distance in meters in the inertial frame
+
 centerline_interval = -0.1;
 xInertial_centerline = [centerline_max:centerline_interval:centerline_min]';
 xInertial_to_yPixel_Matrix = polyfit(xInertial_centerline,xPixel_yPixel_centerline(:,2),3);
@@ -49,9 +52,10 @@ title('FLIPPED:y_{newPixel} vs x_{Inertial} with a fixed 0 lateral distance')
 yInertial_lateral{1} = [-0.3:0.1:0.3]';
 yInertial_lateral{2} = [-0.3:0.1:0.3]';
 yInertial_lateral{3} = [-0.3:0.1:0.3]';
-yInertial_lateral{4} = [-0.3:0.1:0.3]';
-yInertial_lateral{5} = [-0.2:0.1:0.2]';
-xInertial_lateral = [0.96:-.1:0.96+(size(xPixel_yPixel_lateral,2)-1)*-0.1]';
+yInertial_lateral{4} = [-0.2:0.1:0.2]';
+yInertial_lateral{5} = [-0.1:0.1:0.1]';
+
+xInertial_lateral = [centerline_max:-.1:centerline_max+(size(xPixel_yPixel_lateral,2)-1)*-0.1]';
 
 figure
 hold all
