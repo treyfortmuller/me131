@@ -64,10 +64,19 @@ for i = 1:N-1
     
     %compute control inputs and drag/rolling resistance
     
-    deltaFB(i) = ...;
-
-    deltaFFW(i) = ...;
-        
+%     2.1
+%     deltaFB(i) = -kp*e(i);
+%     deltaFFW(i) = 0;
+      
+%     2.2
+%     deltaFB(i) = -kp*(e(i) + xLA*dPsi(i));
+%     deltaFFW(i) = 0;
+    
+%     2.3
+    betaSS(i) = (b - ((a*m*(Ux^2))/(Cr*L)))*K(i);
+    deltaFB(i) = -kp*(e(i) + xLA*(dPsi(i)*betaSS(i)));
+    deltaFFW(i) = L*K(i) + Kug*(Ux^2)*K(i);
+    
     delta(i) = deltaFB(i)+deltaFFW(i);
        
     % Solve for FyF and FyR
@@ -108,4 +117,4 @@ set(gca,'XTickLabel',[])
 ylabel('dPsi (deg)','FontSize',14)
 xlabel('Time (seconds)','FontSize',14)
 
-animateSim(e, s, dPsi, delta, path)
+% animateSim(e, s, dPsi, delta, path)
