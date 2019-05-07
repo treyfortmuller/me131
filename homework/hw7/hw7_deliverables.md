@@ -142,3 +142,19 @@ Matlab output from the reference generator for various steering angles
 yawRateRef1, vyRef1 = 0.28805, 0.13565
 yawRateRef2, vyRef2 = 0.62539, 0.93745
 ```
+
+3.2 Tuned LQR controller for ESC, performance plots
+
+![](/home/trey/Dev/me131/homework/hw7/deliverables/prob3/ESC1.jpg)
+
+![](/home/trey/Dev/me131/homework/hw7/deliverables/prob3/ESC2.jpg)
+
+![](/home/trey/Dev/me131/homework/hw7/deliverables/prob3/ESC3.jpg)
+
+3.3 We can see from the X/Y plot that the vehicle swings wide when ESC is turned off indicating the vehicle is **understeering**, and the ESC is helping to correct it.
+
+3.4 Front and rear tire slip angles
+
+![](/home/trey/Semester 8/ME131/homework/hw7/deliverables/prob3/slip_angles.jpg)
+
+We can see from the plot that front slip angle is much higher than rear slip angle during the maneuver, so this is an understeer condition. With ESC activated, we see a jump in rear slip angle which then decreases the front slip angle and corrects the understeer. 

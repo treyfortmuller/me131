@@ -37,6 +37,8 @@ disp(['yawRateRef1, vyRef1 = ', num2str(yawRateRef1), ', ' num2str(vyRef1)])
 disp(['yawRateRef2, vyRef2 = ', num2str(yawRateRef2), ', ' num2str(vyRef2)])
 
 %% (4) Set Initial Conditions
+clc; close all;
+
 vx = 10; vy = 0; yaw = pi/2; yawRate = 0; X = 0; Y = 0;
 x0 = [vx vy yaw yawRate X Y];
 yawRateRef_ESC = zeros(1,length(time));
@@ -46,7 +48,14 @@ xNoESC = zeros(6,length(time)+1);
 xESC(:,1) = x0';
 xNoESC(:,1) = x0';
 
-%% (5) Run Simulations with ESC OFF
+% slip angles
+alpha_r_NoESC = zeros(1,length(time));
+alpha_f_NoESC = zeros(1,length(time));
+
+alpha_r_ESC = zeros(1,length(time));
+alpha_f_ESC = zeros(1,length(time));
+
+% %% (5) Run Simulations with ESC OFF
 for i = 1:length(time)
     %read current state
     vx_NoESC = xNoESC(1,i);
@@ -61,10 +70,14 @@ for i = 1:length(time)
     
     % Simulation
     xNoESC(:,i+1) = vehicleDyn(xNoESC(:,i),deltaF(i),0,0,0,0);
+    
+    alpha_r_NoESC(i) = -atan(vy_NoESC / vx_NoESC);
+    alpha_f_NoESC(i) = deltaF(i) - atan(vy_NoESC / vx_NoESC);
+
 end
 
 
-%% (6) Run Close-Loop Simulations with ESC ON
+% %% (6) Run Close-Loop Simulations with ESC ON
 for i = 1:length(time)
     %read current state
     vx = xESC(1,i);
@@ -85,6 +98,9 @@ for i = 1:length(time)
 
     % Simulation
     xESC(:,i+1) = vehicleDyn(xESC(:,i),deltaF(i),Fxlf,Fxlr,Fxrf,Fxrr);
+    
+    alpha_r_ESC(i) = -atan(vy / vx);
+    alpha_f_ESC(i) = deltaF(i) - atan(vy / vx);
 
 end
 
@@ -134,3 +150,15 @@ xlabel('time (sec)')
 ylabel('yaw (deg)')
 legend('yaw with ESC on(deg)','yaw with ESC off(deg)')
 legend('Location','southeast')
+
+%% Plotting slip angles for ESC on and off
+figure (4)
+hold on
+plot(time, alpha_r_NoESC)
+plot(time, alpha_f_NoESC)
+plot(time, alpha_r_ESC)
+plot(time, alpha_f_ESC)
+
+xlabel('time (sec)')
+ylabel('slip angles (rad)')
+legend('No ESC: rear slip angle','No ESC: front slip angle', 'ESC: rear slip angle', 'ESC: front slip angle')

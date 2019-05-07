@@ -19,10 +19,12 @@ Ad = A*dt+eye(2);
 
 b11 = 2*C_f/m;
 b21 = 2*l_f*C_f/I_z;
+
 c11 = 0;
 c21 = 1/I_z;
 
 C = [c11; c21];
+Cd = C*dt;
 
 % formulate the error states, our LQR control is based on the error
 % dynamics
@@ -33,12 +35,11 @@ e = [evy; eyawRate];
 
 % weighting matrices, Q is weights on the states, R is weights on control
 % effort. the states are lateral velocity error and angular rate error
-Q = [10, 0;
-     0,  1];
-R = eye(1);
+Q = (11^7)*eye(2);
+R = (10^-1)*eye(1);
 
 % [K,S,e] = dlqr(A,B,Q,R,N)
-[K, soln, eigs] = lqr(A, C, Q, R); % LQR controller
+[K, S, e] = dlqr(Ad, Cd, Q, R); % LQR controller
 
 % Mz = (10^8)*K*e;
 Mz = K*e;
