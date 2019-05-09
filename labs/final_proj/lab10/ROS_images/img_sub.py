@@ -13,7 +13,7 @@ bridge = CvBridge()
 
 def retrieveImage(imgmsg):
     try:
-        mat = bridge.imgmsg_to_cv2(imgmsg, "rgb8")
+        mat = bridge.imgmsg_to_cv2(imgmsg, "bgr8")
         cv2.imshow("Image stream", mat)
         cv2.waitKey(1)
     except CvBridgeError as e:
@@ -23,7 +23,7 @@ def retrieveImage(imgmsg):
 def listener():
     # subscribe to the image stream topic and call retrieveImage function as a callback
     rospy.init_node('cam_stream_listener', anonymous=True)
-    rospy.Subscriber('cam_stream', Image, retrieveImage)
+    rospy.Subscriber('image_raw', Image, retrieveImage)
 
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
