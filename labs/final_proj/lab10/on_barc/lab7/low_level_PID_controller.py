@@ -29,6 +29,9 @@ motor_pwm_offset = 1550.0
 delta_hold = False
 delta_hold_value = 0
 # encoder measurement update
+
+vel_pub = rospy.Publisher('velocity_estimate', Float32, queue_size=10)
+
 def enc_callback(data):
     global t0, v_meas
     global n_FL, n_FR, n_BL, n_BR
@@ -53,6 +56,9 @@ def enc_callback(data):
     # compute speed with second-order, backwards-finite-difference estimate
     v_meas    = r_tire*(3*ang_mean - 4*ang_km1 + ang_km2)/(2*dt)
     # rospy.logwarn("speed = {}".format(v_meas))
+
+    # publish the velocity estimated from the encoders
+    vel_pub.publish(v_meas)
 
     # update old data
     ang_km1 = ang_mean
@@ -166,6 +172,7 @@ def inputToPWM():
     rospy.Subscriber('moving', Moving, moving_callback_function)
     rospy.Subscriber('hold_previous_turn', Bool, hold_turn_function)
     rospy.Subscriber('encoder', Encoder, enc_callback)
+
     # set node rate
     loop_rate   = 40
     ts          = 1.0 / loop_rate

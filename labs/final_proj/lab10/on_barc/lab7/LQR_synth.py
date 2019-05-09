@@ -15,12 +15,17 @@ from barc.msg import ECU, Input
 
 lr = 0.1651
 lf = 0.1651
-v_ref = 0.3 # reference speed
+
+v_ref = 1.0 # reference speed
 # dt = 0.0333 # 30 frames per second?
 
 def camera_callback(data):
 	global R
 	R = data.data
+	if R<0 and R> -0.2:
+		R = -0.2
+	if R>0 and R<0.2:
+		R = 0.2
 
 def steering_callback(data):
 	global d_f
@@ -44,8 +49,7 @@ def barc_uOpt():
 
 	rospy.Subscriber('track_radius', Float32 ,camera_callback ) # get R 
 
-	# TODO: subcribe to a topic with the vehicle velocity
-	# rospy.Subscriber('encoder', Float32 ,speed_callback ) # get v, d_f
+	rospy.Subscriber('velocity_estimate', Float32, speed_callback ) # get v, d_f
 	rospy.Subscriber('ECU',ECU ,steering_callback )
 	rospy.Subscriber('dt',Float64,dt_callback)
 
@@ -58,7 +62,7 @@ def barc_uOpt():
 
 	R = 1
 	d_f = 0.01
-	v = 0.3
+	v = 0
 	dt = 0.05
 
 	loop_rate = 30
@@ -87,7 +91,7 @@ def barc_uOpt():
 		Bc = np.matrix([[cos(u2+phi_ref),-u1*sin(u2+phi_ref)],[sin(u2+phi_ref),u1*sin(u2+phi_ref)],[sin(u2)/lr,u1*cos(u2)/lr]])
 		# print(Bc)
 		# define our cost matrices
-		Q = 0.001*np.matrix([[1,0,0],[0,1,0],[0,0,1]])
+		Q = 0.000001*np.matrix([[1,0,0],[0,1,0],[0,0,1]])#0.001
 		RR = np.matrix([[1,0],[0,1]])
 
 		# define the sampling time of the discrete controller
@@ -107,7 +111,7 @@ def barc_uOpt():
 
 		u = Input()
 		u.vel = u_LQR[0]
-		u.delta = u_LQR[1]
+		u.delta = u_LQR[1]*1.0
 
 		uOpt_pub.publish(u) # publish the optimal output obtained by LQR
 
