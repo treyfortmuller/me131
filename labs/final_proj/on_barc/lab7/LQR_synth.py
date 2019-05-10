@@ -33,7 +33,7 @@ def steering_callback(data):
 
 	d_f = data * (-0.001127)
 	d_f = (d_f+1.732)
-	##print(d_f)
+	# print(d_f)
 
 def speed_callback(data):
 	global v
