@@ -9,3 +9,6 @@ barc/
 
 # ignore submitted zip files
 *.zip
+
+# ignore ROS bagfiles
+*.bag
